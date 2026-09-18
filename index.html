@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小院子 Little Yard Project｜每一個地方，都值得慢慢成為一個家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper: #FAF6F4;
+    --paper-2: #F3EDE9;
+    --ink: #14110E;
+    --ink-soft: #5B564F;
+
+    --yellow: #F7E192;
+    --peach:  #F6D0B4;
+    --pink:   #F4CAD8;
+    --sky:    #91CEEC;
+
+    --deepblue: #2762AC;
+    --lavender: #CEC0DE;
+
+    --navy:  #294A72;
+    --steel: #528CAF;
+    --slate: #627493;
+
+    --line: rgba(20,17,14,0.12);
+    --sans: 'Noto Sans TC', sans-serif;
+    --round: 'Baloo 2', 'Noto Sans TC', sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.85;
+    overflow-x:hidden;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{ background:var(--pink); color:var(--ink); }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  .chapter{
+    position:relative;
+    padding:130px 0 110px;
+    border-bottom:1px solid var(--line);
+  }
+  .chapter:last-of-type{ border-bottom:none; }
+
+  h1,h2,h3{ font-family:var(--round); font-weight:700; color:var(--ink); }
+
+  .eyebrow{
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--round);
+    font-size:14px; font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    margin-bottom:26px;
+  }
+  .eyebrow .mk{ width:26px; height:26px; flex:none; }
+  .eyebrow::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .lead{
+    font-family:var(--round);
+    font-size:clamp(22px,3vw,30px);
+    font-weight:600;
+    color:var(--ink);
+    max-width:720px;
+    line-height:1.55;
+    margin-bottom:20px;
+  }
+  .body-text{ font-size:16px; color:var(--ink-soft); max-width:640px; }
+  .body-text + .body-text{ margin-top:14px; }
+
+  .pull{
+    font-family:var(--round);
+    font-size:clamp(19px,2.4vw,24px);
+    font-weight:600;
+    color:var(--ink);
+    max-width:620px;
+    margin-top:56px;
+    padding:26px 28px;
+    background:var(--paper-2);
+    border-radius:20px;
+    position:relative;
+  }
+
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- shape motifs (brand mark language) ---------- */
+  .shape{ position:absolute; }
+  .shape.tri{ width:0; height:0; }
+  .tri-y{ border-left:26px solid transparent; border-right:26px solid transparent; border-top:40px solid var(--yellow); transform:rotate(8deg); }
+  .tri-sky{ border-left:20px solid transparent; border-right:20px solid transparent; border-bottom:32px solid var(--sky); transform:rotate(-12deg); }
+  .sq-pink{ width:38px; height:38px; background:var(--pink); border-radius:11px; transform:rotate(18deg); }
+  .sq-sky{ width:24px; height:24px; background:var(--sky); border-radius:8px; transform:rotate(24deg); }
+  .bar-peach{ width:18px; height:70px; background:var(--peach); border-radius:9px; transform:rotate(18deg); }
+
+  .float{ animation: drift 7s ease-in-out infinite; }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-14px) rotate(var(--r,0deg)); } }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    backdrop-filter: blur(10px);
+    background:rgba(250,246,244,0.82);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  nav.scrolled{ border-color:var(--line); box-shadow:0 8px 24px -20px rgba(0,0,0,0.4); }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand img{ height:34px; width:auto; }
+  .brand .name{ font-family:var(--round); font-weight:700; font-size:17px; line-height:1.15; }
+  .brand .sub{ font-family:var(--round); font-weight:500; font-size:10px; color:var(--ink-soft); letter-spacing:0.04em; }
+
+  .presented-by{
+    display:flex; align-items:center; gap:8px;
+    font-size:11px; color:var(--ink-soft);
+    border:1px solid var(--line);
+    padding:6px 12px 6px 8px;
+    border-radius:999px;
+  }
+  .presented-by img{ height:14px; width:auto; }
+  @media (max-width:640px){ .presented-by{ display:none; } }
+
+  .navlinks{ display:flex; gap:26px; font-size:13px; font-weight:500; }
+  @media (max-width:900px){ .navlinks{ display:none; } }
+  .navlinks a{ color:var(--ink-soft); position:relative; padding-bottom:4px; }
+  .navlinks a::after{ content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--pink); border-radius:2px; transition:width .3s ease; }
+  .navlinks a:hover::after{ width:100%; }
+  .navlinks a:hover{ color:var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+    padding:150px 32px 100px;
+    overflow:hidden;
+  }
+  .hero-art{
+    position:absolute; top:70px; right:-4%; width:46%; max-width:560px;
+    border-radius:28px; overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(20,17,14,0.35);
+    opacity:0.96;
+  }
+  @media (max-width:940px){ .hero-art{ opacity:0.35; width:70%; right:-20%; top:40px; } }
+
+  .hero-inner{ max-width:1080px; margin:0 auto; width:100%; position:relative; z-index:2; }
+  .hero .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--round); font-size:13px; font-weight:600; color:var(--navy);
+    background:rgba(41,74,114,0.08);
+    padding:8px 16px; border-radius:999px;
+    margin-bottom:30px;
+  }
+  .hero .badge img{ height:13px; width:auto; }
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 60px);
+    line-height:1.4;
+    max-width:760px;
+  }
+  .hero h1 .accent{ color:var(--deepblue); }
+  .hero-eng{ font-family:var(--round); font-weight:600; font-size:clamp(15px,1.8vw,19px); color:var(--ink-soft); margin-top:14px; letter-spacing:0.02em; }
+  .hero .sub{ margin-top:30px; max-width:540px; font-size:17px; color:var(--ink-soft); }
+  .hero .creed{
+    margin-top:46px;
+    font-family:var(--round); font-weight:600; font-size:15px; color:var(--ink);
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--paper-2);
+    padding:12px 20px; border-radius:14px;
+  }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:32px;
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--round); font-size:12px; font-weight:600; color:var(--ink-soft);
+  }
+  .scroll-cue .dot{ width:8px; height:8px; border-radius:50%; background:var(--pink); animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(6px);} }
+
+  /* ---------- why: belief grid ---------- */
+  .belief-grid{ margin-top:60px; display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  @media (max-width:760px){ .belief-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .belief-grid{ grid-template-columns:1fr; } }
+  .belief-card{
+    background:var(--paper-2);
+    border-radius:20px;
+    padding:28px 24px;
+    transition:transform .3s ease, background .3s ease;
+    cursor:pointer;
+  }
+  .belief-card:hover{ transform:translateY(-4px); background:var(--pink); }
+  .belief-card.open{ background:var(--pink); grid-column:span 1; }
+  .belief-card .dot-mark{ width:16px; height:16px; border-radius:5px; margin-bottom:14px; }
+  .belief-card .row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .belief-card h3{ font-size:16px; font-weight:700; line-height:1.6; }
+  .belief-card .plus{ font-family:var(--round); font-size:20px; font-weight:700; color:var(--ink-soft); transition:transform .3s ease; flex:none; }
+  .belief-card.open .plus{ transform:rotate(45deg); }
+  .belief-card .more{
+    max-height:0; overflow:hidden; opacity:0;
+    transition:max-height .4s ease, opacity .4s ease, margin-top .4s ease;
+    font-size:13px; color:var(--ink-soft); line-height:1.85;
+  }
+  .belief-card.open .more{ max-height:400px; opacity:1; margin-top:16px; }
+
+  /* ---------- with: tag cloud ---------- */
+  .tag-grid{ margin-top:56px; display:flex; flex-wrap:wrap; gap:12px; }
+  .tag-pill{
+    font-family:var(--round); font-size:15px; font-weight:600;
+    padding:13px 22px;
+    border-radius:999px;
+    color:var(--ink);
+    background:var(--paper-2);
+    border:2px solid transparent;
+    transition:all .3s ease;
+  }
+  .tag-pill:nth-child(4n+1):hover{ background:var(--yellow); }
+  .tag-pill:nth-child(4n+2):hover{ background:var(--sky); }
+  .tag-pill:nth-child(4n+3):hover{ background:var(--pink); }
+  .tag-pill:nth-child(4n+4):hover{ background:var(--peach); }
+
+  /* ---------- with: participate / gain grids + partner strip ---------- */
+  .sub-heading{
+    font-family:var(--round); font-weight:700; font-size:18px; color:var(--ink);
+    margin-top:58px; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .sub-heading .n{
+    width:24px; height:24px; border-radius:8px; background:var(--paper-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--round); font-size:12px; color:var(--ink-soft);
+  }
+  .mini-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  @media (max-width:800px){ .mini-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .mini-grid{ grid-template-columns:1fr; } }
+  .mini-card{ background:var(--paper-2); border-radius:18px; padding:22px 20px; }
+  .mini-card h4{ font-family:var(--round); font-weight:700; font-size:15px; margin-bottom:8px; color:var(--ink); }
+  .mini-card p{ font-size:12.5px; color:var(--ink-soft); line-height:1.7; }
+  .mini-card ul{ list-style:none; font-size:12.5px; color:var(--ink-soft); line-height:1.9; }
+
+  .partner-strip{ margin-top:58px; }
+  .partner-strip .label{ font-family:var(--round); font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:16px; }
+  .partner-names{ display:flex; flex-wrap:wrap; gap:12px; }
+  .partner-chip{
+    font-family:var(--round); font-weight:600; font-size:13px; color:var(--navy);
+    background:rgba(41,74,114,0.07);
+    padding:9px 18px; border-radius:999px;
+  }
+
+  /* ---------- journey: process steps ---------- */
+  .process-steps{ margin-top:56px; display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+  @media (max-width:900px){ .process-steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .process-steps{ grid-template-columns:1fr; } }
+  .process-step{ background:var(--paper-2); border-radius:18px; padding:20px 18px; position:relative; }
+  .process-step .pn{ font-family:var(--round); font-weight:700; font-size:12px; color:var(--deepblue); margin-bottom:10px; }
+  .process-step h4{ font-family:var(--round); font-weight:700; font-size:15px; margin-bottom:8px; }
+  .process-step p{ font-size:12px; color:var(--ink-soft); line-height:1.7; }
+  .process-flow{
+    margin-top:20px; font-family:var(--round); font-size:13px; font-weight:600; color:var(--ink-soft);
+    background:var(--paper-2); border-radius:999px; padding:14px 22px; text-align:center;
+    line-height:1.8;
+  }
+
+  .place-chips{ margin-top:22px; display:flex; flex-wrap:wrap; gap:10px; }
+  .place-chip{ font-family:var(--round); font-size:13px; font-weight:600; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); padding:8px 16px; border-radius:999px; }
+
+  .hero-split{ display:grid; grid-template-columns:1.05fr 1fr; gap:64px; align-items:center; max-width:1200px; }
+  @media (max-width:940px){ .hero-split{ grid-template-columns:1fr; gap:0; } }
+
+  /* ---------- template-style section devices ---------- */
+  .chapter.bg-sky{ background:#EAF4FB; }
+  .chapter.bg-yellow{ background:#FDF6E3; }
+  .chapter.bg-pink{ background:#FDF1F4; }
+
+  .section-head{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+    padding-bottom:26px; margin-bottom:50px; border-bottom:1px solid var(--line);
+  }
+  .section-head h2{ font-size:clamp(28px,4vw,42px); line-height:1.3; }
+  .badge-icon{
+    width:56px; height:56px; border-radius:50%; background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .badge-icon svg{ width:24px; height:24px; }
+
+  .banner-photo{ border-radius:26px; overflow:hidden; margin-bottom:54px; box-shadow:0 24px 50px -28px rgba(20,17,14,0.35); }
+  .banner-photo img{ width:100%; }
+
+  .split-2col{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  @media (max-width:820px){ .split-2col{ grid-template-columns:1fr; gap:32px; } }
+  .split-2col .ph{ border-radius:22px; overflow:hidden; box-shadow:0 20px 44px -26px rgba(20,17,14,0.32); }
+  .split-2col .ph img{ width:100%; display:block; }
+  .split-2col .tx p{ font-size:15px; color:var(--ink-soft); margin-bottom:16px; }
+  .split-2col .tx p:last-child{ margin-bottom:0; }
+
+  .lineup-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+  @media (max-width:900px){ .lineup-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:480px){ .lineup-grid{ grid-template-columns:1fr; } }
+  .lineup-card .ph{ border-radius:18px; overflow:hidden; margin-bottom:12px; aspect-ratio:3/4; }
+  .lineup-card .ph img{ width:100%; height:100%; object-fit:cover; }
+  .lineup-card .step-n{ font-family:var(--round); font-size:11px; font-weight:700; color:var(--deepblue); margin-bottom:3px; }
+  .lineup-card h4{ font-family:var(--round); font-weight:700; font-size:15px; margin-bottom:4px; }
+  .lineup-card p{ font-size:12px; color:var(--ink-soft); }
+
+  .feature-photo-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:54px; }
+  @media (max-width:820px){ .feature-photo-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .feature-photo-grid{ grid-template-columns:1fr; } }
+  .feature-photo-grid .ph{ border-radius:20px; overflow:hidden; box-shadow:0 16px 32px -22px rgba(20,17,14,0.3); }
+  .feature-photo-grid .ph img{ width:100%; display:block; }
+
+  .booking-steps{ display:flex; gap:34px; margin-bottom:44px; flex-wrap:wrap; }
+  .booking-step{ flex:1; min-width:180px; }
+  .booking-step .sn{
+    width:34px; height:34px; border-radius:50%; background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center; font-family:var(--round); font-weight:700; font-size:14px;
+    margin-bottom:12px;
+  }
+  .booking-step p{ font-size:13.5px; color:var(--ink-soft); }
+
+  .booking-split{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  @media (max-width:900px){ .booking-split{ grid-template-columns:1fr; } }
+  .booking-split .ph{ border-radius:24px; overflow:hidden; }
+  .booking-split .ph img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* ---------- hero v2 with pattern backdrop ---------- */
+  .hero-v2-art{
+    position:relative; border-radius:28px; overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, var(--yellow) 0 34px, transparent 34px 40px),
+      var(--sky);
+    display:flex; align-items:center; justify-content:center;
+    aspect-ratio:1/1;
+  }
+  .hero-v2-art .inset{
+    width:78%; border-radius:22px; overflow:hidden; box-shadow:0 26px 50px -20px rgba(20,17,14,0.4);
+    transform:rotate(-1.2deg);
+  }
+  .hero-v2-art .inset img{ width:100%; display:block; }
+  @media (max-width:940px){ .hero-v2-art{ display:none; } }
+  .hero-v2-badge{
+    width:44px; height:44px; margin-bottom:26px;
+    display:flex; gap:4px; align-items:center;
+  }
+  .hero-v2-badge span{ width:10px; height:22px; border-radius:5px; }
+  .cta-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--sky); color:var(--ink);
+    font-family:var(--round); font-weight:700; font-size:14px;
+    padding:14px 26px; border-radius:999px; margin-top:34px;
+    transition:transform .25s ease, background .25s ease;
+  }
+  .cta-pill:hover{ background:var(--ink); color:var(--paper); transform:translateY(-2px); }
+
+  /* ---------- journey: colorful path timeline ---------- */
+  .journey-wrap{ position:relative; margin-top:64px; }
+  .journey-line{
+    position:absolute; left:19px; top:8px; bottom:8px; width:3px;
+    background: repeating-linear-gradient(180deg, var(--pink) 0 10px, transparent 10px 18px);
+    border-radius:2px;
+  }
+  @media (max-width:600px){ .journey-line{ left:13px; } }
+  .milestones{ display:flex; flex-direction:column; padding-left:64px; }
+  @media (max-width:600px){ .milestones{ padding-left:48px; } }
+  .milestone{ position:relative; padding:22px 0; }
+  .milestone .dot{
+    position:absolute; left:-56px; top:26px;
+    width:14px; height:14px; border-radius:5px;
+    border:3px solid var(--paper);
+    box-shadow:0 0 0 2px var(--line);
+  }
+  @media (max-width:600px){ .milestone .dot{ left:-42px; } }
+  .milestone:nth-child(4n+1) .dot{ background:var(--yellow); }
+  .milestone:nth-child(4n+2) .dot{ background:var(--sky); }
+  .milestone:nth-child(4n+3) .dot{ background:var(--pink); }
+  .milestone:nth-child(4n+4) .dot{ background:var(--peach); }
+  .milestone.origin .dot{ width:20px; height:20px; left:-59px; top:23px; background:var(--deepblue); }
+  @media (max-width:600px){ .milestone.origin .dot{ left:-45px; } }
+  .milestone .m-title{ font-family:var(--round); font-size:19px; font-weight:700; margin-bottom:3px; }
+  .milestone.origin .m-title{ color:var(--deepblue); font-size:22px; }
+  .milestone .m-note{ font-size:14px; color:var(--ink-soft); }
+  .milestone.ellipsis{ color:var(--ink-soft); font-family:var(--round); font-weight:600; font-size:14px; padding-top:10px; }
+
+  /* ---------- impact ---------- */
+  .flow{ margin-top:56px; display:flex; flex-direction:column; }
+  .flow-step{ display:flex; align-items:baseline; gap:16px; padding:14px 0; font-family:var(--round); font-weight:600; font-size:clamp(16px,2vw,19px); }
+  .flow-step .arrow{ color:var(--deepblue); font-size:14px; }
+  .flow-step:first-child .arrow{ visibility:hidden; }
+
+  .impact-cards{ margin-top:60px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:760px){ .impact-cards{ grid-template-columns:1fr; } }
+  .impact-card{ border-radius:20px; padding:28px 24px; background:var(--paper-2); }
+  .impact-card .dot-mark{ width:16px; height:16px; border-radius:5px; margin-bottom:14px; }
+  .impact-card h3{ font-size:18px; font-weight:700; margin-bottom:10px; }
+  .impact-card p{ font-size:13px; color:var(--ink-soft); }
+
+  /* ---------- join ---------- */
+  .join-grid{ margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  @media (max-width:800px){ .join-grid{ grid-template-columns:1fr; gap:40px; } }
+  .join-copy .body-text{ margin-top:18px; }
+  .join-list{ margin-top:26px; }
+  .join-list .row{ display:flex; gap:14px; padding:13px 0; border-top:1px solid var(--line); font-size:14px; color:var(--ink-soft); }
+  .join-list .row:last-child{ border-bottom:1px solid var(--line); }
+  .join-list .row b{ color:var(--ink); font-weight:700; min-width:64px; font-family:var(--round); }
+
+  form{ display:flex; flex-direction:column; gap:16px; background:var(--paper-2); padding:30px; border-radius:24px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field label{ font-family:var(--round); font-size:12px; font-weight:600; color:var(--ink-soft); }
+  .field input, .field select, .field textarea{
+    background:var(--paper);
+    border:2px solid transparent;
+    border-radius:12px;
+    padding:12px 14px;
+    font-family:var(--sans);
+    font-size:15px;
+    color:var(--ink);
+    outline:none;
+    resize:vertical;
+  }
+  .field textarea{ min-height:80px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--sky); }
+  .field input::placeholder, .field textarea::placeholder{ color:rgba(20,17,14,0.35); }
+
+  .submit-btn{
+    margin-top:6px; align-self:flex-start;
+    background:var(--ink); color:var(--paper);
+    border:none; font-family:var(--round); font-weight:700; font-size:16px;
+    padding:15px 34px; border-radius:999px; cursor:pointer;
+    transition:background .3s ease, transform .2s ease;
+  }
+  .submit-btn:hover{ background:var(--deepblue); transform:translateY(-1px); }
+  .submit-btn:focus-visible, a:focus-visible, .navlinks a:focus-visible{ outline:2px solid var(--deepblue); outline-offset:3px; }
+
+  /* ---------- closing cta with geometric pattern ---------- */
+  .closing-cta{ background:var(--paper); padding:0; border-bottom:1px solid var(--line); }
+  .closing-grid{ display:grid; grid-template-columns:1fr 1fr; min-height:520px; }
+  @media (max-width:860px){ .closing-grid{ grid-template-columns:1fr; min-height:auto; } }
+  .closing-text{ display:flex; flex-direction:column; justify-content:center; padding:80px 56px; }
+  .closing-text h2{ font-size:clamp(30px,4.6vw,50px); line-height:1.28; margin-bottom:36px; }
+  .closing-text .info p{ font-size:14px; color:var(--ink-soft); margin-bottom:6px; }
+  .closing-pattern{
+    background-image:
+      linear-gradient(135deg, var(--yellow) 25%, transparent 25.5%, transparent 75%, var(--yellow) 75.5%),
+      linear-gradient(45deg, var(--yellow) 25%, var(--sky) 25.5%, var(--sky) 75%, var(--yellow) 75.5%);
+    background-size:88px 88px;
+    background-position:0 0, 0 0;
+    min-height:360px;
+  }
+  @media (max-width:860px){ .closing-pattern{ min-height:220px; } }
+
+  /* ---------- footer / presented by ---------- */
+  footer{ background:var(--navy); color:#EDF2F7; padding:70px 32px 40px; }
+  .footer-wrap{ max-width:1080px; margin:0 auto; }
+  .footer-top{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.16); }
+  .footer-brand .creed{ font-family:var(--round); font-weight:700; font-size:19px; margin-bottom:10px; max-width:360px; line-height:1.6; }
+  .footer-brand img.small-lockup{ height:64px; width:auto; margin-bottom:18px; filter:brightness(0) invert(1); opacity:0.95; }
+  .footer-nav{ display:flex; flex-direction:column; gap:8px; }
+  .footer-nav .label{ font-size:11px; letter-spacing:0.1em; color:rgba(237,242,247,0.55); margin-bottom:6px; text-transform:uppercase; font-family:var(--round); }
+  .footer-nav a{ font-size:13px; color:rgba(237,242,247,0.85); }
+  .footer-nav a:hover{ color:#fff; text-decoration:underline; }
+  .presenter{ text-align:left; }
+  .presenter .label{ font-size:11px; letter-spacing:0.1em; color:rgba(237,242,247,0.6); margin-bottom:14px; text-transform:uppercase; font-family:var(--round); }
+  .presenter img{ height:40px; width:auto; background:#fff; padding:12px 18px; border-radius:14px; }
+  .presenter p{ font-size:12px; color:rgba(237,242,247,0.7); margin-top:12px; max-width:280px; }
+  .footer-bottom{ padding-top:26px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px; color:rgba(237,242,247,0.55); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+    .scroll-cue .dot, .float{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">
+    <img src="assets/logo-mark.png" alt="小院子 Little Yard Project 標誌">
+    <div>
+      <div class="name">小院子</div>
+      <div class="sub">LITTLE YARD PROJECT</div>
+    </div>
+  </div>
+  <div class="navlinks">
+    <a href="index.html">小院子</a>
+    <a href="#why">品牌理念</a>
+    <a href="#with">企業合作</a>
+    <a href="story.html">家的模樣</a>
+    <a href="join.html">一起開始</a>
+  </div>
+  <a class="presented-by" href="#presenter">
+    <img src="assets/con-logo.png" alt="原築院建築">
+    主辦：原築院建築
+  </a>
+</nav>
+
+<!-- ============ HERO / 品牌理念 ============ -->
+<header class="hero" id="why">
+  <div class="hero-inner hero-split">
+    <div>
+      <div class="hero-v2-badge">
+        <span style="background:var(--yellow)"></span><span style="background:var(--pink)"></span><span style="background:var(--sky)"></span>
+      </div>
+      <div class="badge reveal"><img src="assets/con-logo.png" alt="">由 原築院建築 Con+Create Architecture 發起</div>
+      <h1 class="reveal">一起，<br>找到<span class="accent">家</span>的樣子。</h1>
+      <p class="hero-eng reveal">Let's Discover Home Together.</p>
+      <p class="sub reveal">我們相信，真正的地方創生，不是一次活動，不是一個建築，也不是一項公益專案，而是透過教育、場域、公益與企業合作，陪伴地方慢慢建立新的連結，讓更多人願意留下來、參與、創造，最後共同成為一個家的樣子。</p>
+      <a href="#why-detail" class="cta-pill reveal">認識小院子 →</a>
+      <div class="creed reveal" style="margin-top:24px;">地方不是被改變，而是被陪伴。</div>
+    </div>
+    <div class="hero-v2-art reveal">
+      <div class="inset"><img src="assets/hero-truck.jpg" alt="小院子行動教室，孩子們圍坐聽故事"></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="dot"></span>往下，看見我們如何做</div>
+</header>
+
+<section class="chapter" id="why-detail">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px; border:none;"><svg class="mk" viewBox="0 0 26 26"><polygon points="13,2 24,22 2,22" fill="#F7E192"/></svg>我們相信什麼</div>
+        <h2>回答的是：<br>為什麼小院子會開始做這件事？</h2>
+      </div>
+      <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z" fill="currentColor"/></svg></div>
+    </div>
+
+    <div class="split-2col reveal">
+      <div class="ph"><img src="assets/truck2.jpg" alt="小院子行動教室現場"></div>
+      <div class="tx">
+        <p>小院子，是原築院建築延伸出的實驗型場域；專注於在地材料、工法，兒童友善的建築教育實踐。</p>
+        <p>串連在地建材共創價值，探索家的材料五感教育——這也是我們最主要的活動「家的材料課」。</p>
+        <p>我們不留下永久設施，而是把材料、故事與陪伴，留在一個又一個地方裡。</p>
+      </div>
+    </div>
+
+    <div class="belief-grid reveal" style="margin-top:64px;" id="belief-grid">
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--yellow)"></div>
+        <div class="row"><h3>品牌故事</h3><span class="plus">+</span></div>
+        <div class="more">多年來，我們在建築設計的過程中，看見了無數不同的家庭、社區與地方。我們發現，真正影響一座城市的，不只是新的建築，而是人與人、人與地方之間是否還保有連結。好的建築可以改善空間，但真正讓地方持續成長的，是教育、文化、公益與共同參與。因此，我們開始思考：如果建築能創造空間，是否也能創造一個更好的地方？這，就是小院子的起點。</div>
+      </div>
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--sky)"></div>
+        <div class="row"><h3>創辦理念</h3><span class="plus">+</span></div>
+        <div class="more">在每一次地方合作中，我們發現：企業希望投入 ESG，卻找不到真正能長期合作的地方；社區希望改善環境，卻缺乏持續的資源；學校希望帶給孩子更多元的學習體驗；地方品牌希望被更多人認識；居民希望重新找回對地方的認同。每一方都擁有改變地方的力量，只是彼此還沒有真正相遇——我們存在的目的，就是成為那個把彼此連結起來的平台。</div>
+      </div>
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--pink)"></div>
+        <div class="row"><h3>Con+Create 的精神</h3><span class="plus">+</span></div>
+        <div class="more">CON + CREATE = TO CREATE TOGETHER，一起創造。我們相信，最好的公益，不是單向付出，而是共同創造新的價值——讓企業的品牌價值、居民的生活、孩子的教育、地方的文化，一起成長。</div>
+      </div>
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--peach)"></div>
+        <div class="row"><h3>為什麼選擇地方創生</h3><span class="plus">+</span></div>
+        <div class="more">真正的地方創生，不是完成一個補助計畫，也不是一次性的活動。真正重要的，是建立一個十年後仍然持續發生的合作關係——讓地方不是被改變，而是被陪伴著，慢慢長出自己的樣子。</div>
+      </div>
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--yellow)"></div>
+        <div class="row"><h3>為什麼選擇教育</h3><span class="plus">+</span></div>
+        <div class="more">AI 可以回答問題，卻無法替孩子感受木頭的溫度；搜尋可以找到知識，卻無法替孩子理解家的故事。未來真正重要的能力，不是背更多答案，而是擁有觀察力、感受力、思考力、合作力、創造力與關懷力。我們教的不是建材，而是認識生活的方法。</div>
+      </div>
+      <div class="belief-card">
+        <div class="dot-mark" style="background:var(--sky)"></div>
+        <div class="row"><h3>為什麼相信「家」</h3><span class="plus">+</span></div>
+        <div class="more">每一個地方，都值得慢慢成為一個家。家不是一棟建築完工的那一刻，而是孩子放學後仍願意回來、居民願意主動相聚、企業願意一年一年再回來的地方。地方不是被改變，而是被陪伴。</div>
+      </div>
+    </div>
+    <p class="pull reveal">地方不是被改變，而是被陪伴。</p>
+    <p class="pull reveal">CON + CREATE = TO CREATE TOGETHER，一起創造。</p>
+  </div>
+</section>
+
+<!-- ============ 企業合作 With ============ -->
+<section class="chapter bg-yellow" id="with">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px; border:none;"><svg class="mk" viewBox="0 0 26 26"><rect x="4" y="4" width="18" height="18" rx="7" fill="#F6D0B4"/></svg>如何一起陪伴地方</div>
+        <h2>不是介紹贊助方案，<br>而是介紹企業如何成為地方的一部分。</h2>
+      </div>
+      <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg></div>
+    </div>
+    <p class="body-text reveal">從一次校園課程、一次社區共學，到一台走進偏鄉的行動車，每一種合作方式，都是企業與地方建立關係的起點。</p>
+    <div class="tag-grid reveal">
+      <div class="tag-pill">ESG 合作</div>
+      <div class="tag-pill">CSR 方案</div>
+      <div class="tag-pill">校園合作</div>
+      <div class="tag-pill">社區合作</div>
+      <div class="tag-pill">行動車合作</div>
+      <div class="tag-pill">NPC 據點認養</div>
+      <div class="tag-pill">地方品牌合作</div>
+    </div>
+
+    <div class="feature-photo-grid reveal">
+      <div class="ph"><img src="assets/feature-0.jpg" alt="環境認識與材料課程"></div>
+      <div class="ph"><img src="assets/feature-1.jpg" alt="虛/實整合活動體驗"></div>
+      <div class="ph"><img src="assets/feature-2.jpg" alt="移動式的品牌教育宣傳"></div>
+      <div class="ph"><img src="assets/feature-3.jpg" alt="協助社區故事行銷"></div>
+    </div>
+
+    <div class="sub-heading reveal"><span class="n">A</span>企業可以如何參與</div>
+    <div class="mini-grid reveal">
+      <div class="mini-card"><h4>材料支持</h4><p>提供材料、產品，轉化為教育與地方共創內容。</p></div>
+      <div class="mini-card"><h4>專業參與</h4><p>將建築材料、專業帶進地方。</p></div>
+      <div class="mini-card"><h4>員工參與</h4><p>設計企業志工、員工家庭日、親子共創、地方走讀。</p></div>
+      <div class="mini-card"><h4>年度夥伴</h4><p>陪伴一個地方完成較完整的一年度社區行動。</p></div>
+    </div>
+
+    <div class="partner-strip reveal">
+      <div class="label">已合作夥伴 · PARTNERS</div>
+      <div class="partner-names">
+        <span class="partner-chip">國順 KUO SHUN</span>
+        <span class="partner-chip">中國瓷釉集團 CHINA GLAZE GROUP</span>
+        <span class="partner-chip">Order 歐德傢俱連鎖事業</span>
+        <span class="partner-chip">Rotary International</span>
+      </div>
+    </div>
+
+    <p class="pull reveal">我們不是邀請企業支持一場活動，而是邀請企業一起陪伴一個地方。</p>
+  </div>
+</section>
+
+<!-- ============ 家的足跡 Journey ============ -->
+<section class="chapter bg-sky" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px; border:none;"><svg class="mk" viewBox="0 0 26 26"><rect x="4" y="4" width="18" height="18" rx="7" fill="#F4CAD8"/></svg>我們陪伴地方走過的路</div>
+        <h2>不是案例，不是新聞，<br>而是一本地方慢慢長大的故事。</h2>
+      </div>
+      <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4"/></svg></div>
+    </div>
+
+    <div class="banner-photo reveal"><img src="assets/truck3.jpg" alt="小院子行動教室，材料課程現場"></div>
+
+    <div class="sub-heading reveal" style="margin-top:0;">我們怎麼陪伴一個地方</div>
+    <div class="lineup-grid reveal">
+      <div class="lineup-card"><div class="ph"><img src="assets/journey-walkin.jpg" alt="走進社區"></div><div class="step-n">01 支持</div><h4>走進社區</h4><p>願意參與教育、社區與地方共創。</p></div>
+      <div class="lineup-card"><div class="ph"><img src="assets/journey-discover.jpg" alt="發現地方"></div><div class="step-n">02 了解需求</div><h4>發現地方</h4><p>依需求進駐校園、社區、公園、市集或企業園區。</p></div>
+      <div class="lineup-card"><div class="ph"><img src="assets/journey-cocreate.jpg" alt="居民共創"></div><div class="step-n">03 一起探索</div><h4>居民共創</h4><p>舉辦材料探索、建築教育、親子工作坊與地方走讀。</p></div>
+      <div class="lineup-card"><div class="ph"><img src="assets/journey-handover.jpg" alt="留下地方成果"></div><div class="step-n">04 留下成果</div><h4>留下地方成果</h4><p>居民共同參與，累積地方記憶與企業 ESG 影響力。</p></div>
+      <div class="lineup-card"><div class="ph"><img src="assets/journey-continue.jpg" alt="讓影響延續"></div><div class="step-n">05 影響力延續</div><h4>讓影響延續</h4><p>不留下永久設施，前往下一個社區。</p></div>
+    </div>
+    <div class="process-flow reveal">企業支持 → 小院子進入社區 → 發現地方 → 居民參與 → 產生地方成果 → 影響持續發生</div>
+
+    <div class="split-2col reveal" style="margin-top:54px;">
+      <div class="ph"><img src="assets/journey-cocreate.jpg" alt="光華二街社區，居民共創現場"></div>
+      <div class="tx">
+        <p class="lead" style="margin-bottom:14px;">光華二街社區的故事，正在寫。</p>
+        <p>從第一次拜訪、第一次課程，到第一座 NPC 據點、企業加入、居民開始自主辦活動——每一個地方，都有自己持續更新的故事頁。</p>
+        <a href="story.html" class="cta-pill" style="margin-top:22px;">看完整的故事地圖 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 地方影響力 Impact ============ -->
+<section class="chapter bg-pink" id="impact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px; border:none;"><svg class="mk" viewBox="0 0 26 26"><rect x="9" y="4" width="8" height="18" rx="4" fill="#91CEEC" transform="rotate(18 13 13)"/></svg>陪伴，慢慢改變地方</div>
+        <h2>不是 KPI，<br>而是改變如何慢慢發生。</h2>
+      </div>
+      <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18l5-6 4 4 7-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="split-2col reveal">
+      <div class="ph"><img src="assets/journey-handover.jpg" alt="居民共同參與，留下地方成果"></div>
+      <div class="flow">
+        <div class="flow-step"><span class="arrow">↓</span>孩子開始認識自己的家鄉。</div>
+        <div class="flow-step"><span class="arrow">↓</span>家長開始一起參與。</div>
+        <div class="flow-step"><span class="arrow">↓</span>社區開始自己辦活動。</div>
+        <div class="flow-step"><span class="arrow">↓</span>企業開始長期投入。</div>
+        <div class="flow-step"><span class="arrow">↓</span>地方品牌開始被看見。</div>
+        <div class="flow-step"><span class="arrow">↓</span>形成新的地方循環。</div>
+      </div>
+    </div>
+
+    <div class="impact-cards reveal">
+      <div class="impact-card"><div class="dot-mark" style="background:var(--yellow)"></div><h3>影響力數據</h3><p>陪伴據點、參與人次、合作企業與地方的累積成果，資料整理中，將陸續公開。</p></div>
+      <div class="impact-card"><div class="dot-mark" style="background:var(--sky)"></div><h3>影響力地圖</h3><p>標記出小院子走過的每一個地方，讓陪伴的足跡可以被看見。</p></div>
+      <div class="impact-card"><div class="dot-mark" style="background:var(--pink)"></div><h3>成長時間軸</h3><p>從第一個地方到現在，記錄每一段慢慢長大的過程。</p></div>
+    </div>
+
+    <p class="pull reveal">讓數據成為故事的證明，而不是目的。</p>
+  </div>
+</section>
+
+<!-- ============ 一起開始 Join ============ -->
+<section class="chapter bg-yellow" id="join">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px; border:none;">
+          <svg class="mk" viewBox="0 0 26 26">
+            <polygon points="7,2 13,10 1,10" fill="#F7E192"/>
+            <rect x="14" y="2" width="9" height="9" rx="3.5" fill="#91CEEC"/>
+            <rect x="2" y="14" width="7" height="10" rx="3.5" fill="#F4CAD8"/>
+            <rect x="15" y="15" width="8" height="8" rx="3" fill="#F6D0B4"/>
+          </svg>
+          下一個地方，希望和你一起開始
+        </div>
+        <h2>不是聯絡我們，<br>而是邀請更多人成為地方故事的一部分。</h2>
+        <a href="join.html" class="cta-pill" style="margin-top:24px;">看完整的「一起開始」與願望牆 →</a>
+      </div>
+      <div class="badge-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <p class="body-text reveal">無論你是想帶著企業一起陪伴一個地方，或是老師、居民，想讓自己的家鄉被更多人看見，都歡迎從這裡開始。</p>
+
+    <div class="booking-steps reveal">
+      <div class="booking-step"><div class="sn">1</div><p>告訴我們你是企業、學校、社區還是個人。</p></div>
+      <div class="booking-step"><div class="sn">2</div><p>我們會依你的需求，回覆合適的陪伴方式。</p></div>
+      <div class="booking-step"><div class="sn">3</div><p>一起約時間，開始規劃屬於你們的內容。</p></div>
+    </div>
+
+    <div class="booking-split">
+      <div class="ph reveal"><img src="assets/truck2.jpg" alt="小院子行動教室"></div>
+      <div class="ph reveal"><img src="assets/hero-truck.jpg" alt="小院子行動教室，孩子們圍坐聽故事"></div>
+    </div>
+
+    <div class="reveal" style="text-align:center; margin-top:44px;">
+      <a href="join.html" class="cta-pill" style="font-size:16px; padding:18px 38px;">告訴我們你想一起完成什麼 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="closing-cta">
+  <div class="closing-grid">
+    <div class="closing-text reveal">
+      <h2>你的地方，<br>你的故事，<br>你的家。</h2>
+      <div class="info">
+        <p><strong>小院子 Little Yard Project</strong></p>
+        <p>原築院建築 Con+Create Architecture</p>
+        <p>新竹市</p>
+        <p>Email: littleyardproject@gmail.com</p>
+      </div>
+    </div>
+    <div class="closing-pattern"></div>
+  </div>
+</section>
+
+<footer id="presenter">
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="small-lockup" src="assets/logo-lockup.png" alt="小院子 Little Yard Project">
+        <div class="creed">地方不是被改變，而是被陪伴。</div>
+      </div>
+      <div class="footer-nav">
+        <div class="label">Sitemap</div>
+        <a href="index.html">首頁</a>
+        <a href="story.html">家的模樣</a>
+        <a href="join.html">一起開始</a>
+      </div>
+      <div class="presenter">
+        <div class="label">主辦單位 · Presented by</div>
+        <img src="assets/con-logo.png" alt="原築院建築 Con+Create Architecture">
+        <p>小院子 Little Yard Project 由原築院建築 Con+Create Architecture 發起，透過建築專業出發，陪伴地方走一條慢慢長大的路。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>小院子 LITTLE YARD PROJECT</span>
+      <span>原築院建築 CON + CREATE ARCHITECTURE</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  document.querySelectorAll('#belief-grid .belief-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const wasOpen = card.classList.contains('open');
+      document.querySelectorAll('#belief-grid .belief-card').forEach(c => c.classList.remove('open'));
+      if(!wasOpen) card.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
