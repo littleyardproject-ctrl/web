@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一起開始｜小院子 Little Yard Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .join-hero{ padding:150px 32px 90px; text-align:left; }
+  .join-hero .eng{ font-family:var(--round); font-size:14px; font-weight:700; color:var(--deepblue); margin-bottom:18px; }
+  .join-hero h1{ font-size:clamp(32px,5vw,54px); line-height:1.4; max-width:820px; margin-bottom:34px; }
+  .poem{ font-size:16px; color:var(--ink-soft); max-width:560px; line-height:2; margin-bottom:40px; }
+
+  .who-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:820px){ .who-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .who-grid{ grid-template-columns:1fr; } }
+  .who-card{ background:var(--paper-2); border-radius:20px; padding:28px 24px; transition:transform .3s ease, background .3s ease; }
+  .who-card:hover{ transform:translateY(-4px); background:var(--pink); }
+  .who-card .ic{ font-size:26px; margin-bottom:14px; }
+  .who-card h4{ font-family:var(--round); font-weight:700; font-size:16px; margin-bottom:8px; }
+  .who-card p{ font-size:13px; color:var(--ink-soft); line-height:1.7; }
+
+  .outcome-list{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:50px; }
+  @media (max-width:640px){ .outcome-list{ grid-template-columns:1fr; } }
+  .outcome-item{ display:flex; align-items:center; gap:14px; background:var(--paper-2); border-radius:16px; padding:18px 20px; font-family:var(--round); font-weight:600; font-size:15px; }
+  .outcome-item .ic{ font-size:22px; flex:none; }
+
+  .process-rail{ margin-top:56px; display:flex; flex-direction:column; }
+  .process-row{ display:grid; grid-template-columns:120px 1fr; gap:20px; padding:22px 0; border-top:1px solid var(--line); }
+  .process-row:last-child{ border-bottom:1px solid var(--line); }
+  .process-row .step-label{ font-family:var(--round); font-weight:700; color:var(--deepblue); font-size:14px; }
+  .process-row h4{ font-family:var(--round); font-weight:700; font-size:17px; margin-bottom:4px; }
+  .process-row p{ font-size:13.5px; color:var(--ink-soft); }
+
+  .relationship-quote{
+    background:var(--navy); color:#fff; border-radius:28px; padding:60px 50px; margin-top:10px;
+    font-family:var(--round); font-weight:600; font-size:clamp(18px,2.4vw,24px); line-height:1.9; text-align:center;
+  }
+  .relationship-quote .small{ font-size:14px; font-weight:400; color:rgba(255,255,255,0.75); margin-top:24px; line-height:1.9; }
+
+  .find-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:50px; }
+  @media (max-width:820px){ .find-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .find-grid{ grid-template-columns:1fr; } }
+  .find-card{ background:var(--paper-2); border-radius:20px; padding:26px 22px; }
+  .find-card .ic{ font-size:24px; margin-bottom:12px; }
+  .find-card h4{ font-family:var(--round); font-weight:700; font-size:15px; margin-bottom:6px; }
+  .find-card p{ font-size:12.5px; color:var(--ink-soft); margin-bottom:10px; }
+  .find-card a{ font-family:var(--round); font-size:12.5px; font-weight:700; color:var(--deepblue); }
+
+  .checkbox-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:6px; }
+  @media (max-width:560px){ .checkbox-grid{ grid-template-columns:1fr; } }
+  .checkbox-item{ display:flex; align-items:center; gap:10px; background:var(--paper); border-radius:12px; padding:12px 14px; font-size:13.5px; }
+  .checkbox-item input{ width:16px; height:16px; flex:none; }
+
+  .question-box{ background:var(--yellow); border-radius:20px; padding:26px 24px; margin-bottom:26px; }
+  .question-box label{ font-family:var(--round); font-weight:700; font-size:16px; display:block; margin-bottom:12px; }
+  .question-box textarea{ width:100%; border:none; border-radius:12px; padding:14px; font-family:var(--sans); font-size:14px; min-height:70px; resize:vertical; }
+
+  .wall-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:36px; }
+  @media (max-width:900px){ .wall-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .wall-grid{ grid-template-columns:1fr; } }
+  .wall-card{
+    border-radius:16px; padding:20px 18px; font-family:var(--round); font-size:14px; line-height:1.7; font-weight:600;
+    box-shadow:0 10px 22px -16px rgba(20,17,14,0.3); transform:rotate(var(--rot,0deg));
+  }
+  .wall-form{ display:flex; gap:12px; margin-top:40px; flex-wrap:wrap; }
+  .wall-form input{ flex:1; min-width:220px; background:var(--paper-2); border:2px solid transparent; border-radius:999px; padding:14px 22px; font-family:var(--sans); font-size:14px; outline:none; }
+  .wall-form input:focus{ border-color:var(--sky); }
+  .wall-form button{ white-space:nowrap; }
+  .wall-note{ font-size:12px; color:var(--ink-soft); margin-top:14px; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-mark.png" alt="小院子 Little Yard Project 標誌">
+    <div>
+      <div class="name">小院子</div>
+      <div class="sub">LITTLE YARD PROJECT</div>
+    </div>
+  </a>
+  <div class="navlinks">
+    <a href="index.html">小院子</a>
+    <a href="index.html#why">品牌理念</a>
+    <a href="index.html#with">企業合作</a>
+    <a href="story.html">家的模樣</a>
+    <a href="join.html" class="active">一起開始</a>
+  </div>
+  <a class="presented-by" href="index.html#presenter">
+    <img src="assets/con-logo.png" alt="原築院建築">
+    主辦：原築院建築
+  </a>
+</nav>
+
+<header class="join-hero">
+  <div class="wrap">
+    <div class="eng reveal">EVERY GREAT PLACE BEGINS WITH A CONVERSATION</div>
+    <h1 class="reveal">每一段地方故事，都從一次<br>願意坐下來的對話開始。</h1>
+    <p class="poem reveal">我們不急著提出答案。<br>因為每一個地方，都有自己的文化、自己的居民、自己的生活方式。<br><br>我們更希望，先認識地方，認識人，再一起找到屬於這個地方的方法。<br><br>如果你也相信，一個地方可以因為一群人的陪伴而慢慢改變，我們很期待，和你一起開始。</p>
+    <a href="#form" class="cta-pill reveal">告訴我們你想一起完成什麼 →</a>
+  </div>
+</header>
+
+<!-- Chapter 1 -->
+<section class="chapter bg-yellow">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 1</div>
+    <p class="lead reveal">我們想一起認識你。</p>
+    <p class="body-text reveal">不是每一個人都會以同樣的方式加入，因此我們設計了不同的共創旅程。</p>
+    <div class="who-grid reveal">
+      <div class="who-card"><div class="ic">🏫</div><h4>學校</h4><p>讓探索走進教室，一起培養孩子認識家與地方。</p></div>
+      <div class="who-card"><div class="ic">🏘️</div><h4>社區</h4><p>一起打造新的交流場域，讓居民重新建立連結。</p></div>
+      <div class="who-card"><div class="ic">🏢</div><h4>企業</h4><p>讓 ESG 不只是捐款，而是長期陪伴地方。</p></div>
+      <div class="who-card"><div class="ic">👨‍👩‍👧</div><h4>家庭</h4><p>陪孩子一起探索、一起創造、一起認識自己的家。</p></div>
+      <div class="who-card"><div class="ic">🎨</div><h4>地方品牌</h4><p>一起讓地方特色被更多人看見。</p></div>
+      <div class="who-card"><div class="ic">❤️</div><h4>志工與創作者</h4><p>一起把專業、創意、時間，變成地方成長的力量。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 2 -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 2</div>
+    <p class="lead reveal">我們可以一起完成什麼？</p>
+    <p class="body-text reveal">我們提供的不是服務，而是一段共同完成的旅程。例如：</p>
+    <div class="outcome-list reveal">
+      <div class="outcome-item"><span class="ic">🌱</span>一所學校的探索教育</div>
+      <div class="outcome-item"><span class="ic">🏡</span>一座地方據點</div>
+      <div class="outcome-item"><span class="ic">🚐</span>一台走進社區的行動車</div>
+      <div class="outcome-item"><span class="ic">🤝</span>一次企業陪伴計畫</div>
+      <div class="outcome-item"><span class="ic">📖</span>一本地方故事</div>
+      <div class="outcome-item"><span class="ic">🎨</span>一個地方品牌的誕生</div>
+      <div class="outcome-item"><span class="ic">🌍</span>一群願意回來的孩子</div>
+    </div>
+    <p class="pull reveal">每一件事情，都不是由原築院完成，而是由許多人共同完成。</p>
+  </div>
+</section>
+
+<!-- Chapter 3 -->
+<section class="chapter bg-sky">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 3</div>
+    <p class="lead reveal">從一場對話開始，一段陪伴延續。</p>
+    <div class="process-rail reveal">
+      <div class="process-row"><div class="step-label">STEP 1</div><div><h4>認識彼此</h4><p>了解你的想法與期待。</p></div></div>
+      <div class="process-row"><div class="step-label">STEP 2</div><div><h4>走進地方</h4><p>傾聽居民、老師、孩子與社區的聲音。</p></div></div>
+      <div class="process-row"><div class="step-label">STEP 3</div><div><h4>共同設計</h4><p>一起找到最適合地方的方式。</p></div></div>
+      <div class="process-row"><div class="step-label">STEP 4</div><div><h4>一起實踐</h4><p>課程、場域、行動車、公益計畫同步展開。</p></div></div>
+      <div class="process-row"><div class="step-label">STEP 5</div><div><h4>持續陪伴</h4><p>回訪、優化、共創，讓故事持續寫下去。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 4 -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 4</div>
+    <p class="lead reveal">我們期待的是一段關係，而不是一個專案。</p>
+    <div class="relationship-quote reveal">
+      很多合作，都有完成的一天。但地方沒有。
+      <div class="small">
+        真正重要的，不是今天完成了什麼，而是明年回來時，孩子是否還記得這裡，居民是否還願意聚在一起，企業是否還願意再次投入。<br><br>
+        因此，如果可以，我們更期待陪伴一個地方五年、十年，而不是完成一次活動。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 5 -->
+<section class="chapter bg-yellow">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 5</div>
+    <p class="lead reveal">找到我們，也找到地方。</p>
+    <div class="find-grid reveal">
+      <div class="find-card"><div class="ic">📍</div><h4>原築院品牌基地</h4><p>品牌策劃與教育中心。</p></div>
+      <div class="find-card"><div class="ic">🚐</div><h4>家的行動車</h4><p>把資源帶進每一個需要的地方。</p></div>
+      <div class="find-card"><div class="ic">🏡</div><h4>NPC 地方據點</h4><p>每一座據點，都是地方共同創造的開始。</p></div>
+      <div class="find-card"><div class="ic">🗺️</div><h4>地方足跡地圖</h4><p>看看我們正在陪伴哪些地方。</p><a href="story.html">看家的模樣 →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 6 / Form -->
+<section class="chapter" id="form">
+  <div class="wrap">
+    <div class="eyebrow reveal">Chapter 6</div>
+    <p class="lead reveal">告訴我們，你想一起完成什麼？</p>
+    <p class="body-text reveal">不要只是填寫聯絡資訊，而是先回答一個問題。</p>
+
+    <form class="reveal" id="join-form" style="margin-top:32px;">
+      <div class="question-box">
+        <label for="dream">你希望，這個地方未來變成什麼樣子？</label>
+        <textarea id="dream" name="dream" placeholder="寫下你對這個地方的期待……"></textarea>
+      </div>
+
+      <div class="checkbox-grid">
+        <label class="checkbox-item"><input type="checkbox" value="家的探索學">我想邀請家的探索學</label>
+        <label class="checkbox-item"><input type="checkbox" value="家的行動車">我想申請家的行動車</label>
+        <label class="checkbox-item"><input type="checkbox" value="NPC地方據點">我想打造 NPC 地方據點</label>
+        <label class="checkbox-item"><input type="checkbox" value="企業ESG">我想規劃企業 ESG</label>
+        <label class="checkbox-item"><input type="checkbox" value="地方品牌">我想一起推動地方品牌</label>
+        <label class="checkbox-item"><input type="checkbox" value="志工合作">我想加入志工或合作夥伴</label>
+      </div>
+
+      <div class="field"><label for="name">姓名</label><input type="text" id="name" placeholder="請輸入您的姓名" required></div>
+      <div class="field"><label for="org">單位</label><input type="text" id="org" placeholder="學校／社區／企業／個人"></div>
+      <div class="field"><label for="email">Email</label><input type="email" id="email" placeholder="請輸入聯絡信箱" required></div>
+      <div class="field"><label for="phone">電話</label><input type="tel" id="phone" placeholder="請輸入聯絡電話"></div>
+      <div class="field"><label for="message">想分享的想法</label><textarea id="message" placeholder="還有什麼想告訴我們的嗎？"></textarea></div>
+
+      <button type="submit" class="submit-btn">一起開始</button>
+    </form>
+  </div>
+</section>
+
+<!-- Dream Wall -->
+<section class="chapter bg-pink">
+  <div class="wrap">
+    <div class="eyebrow reveal">DREAM WALL</div>
+    <p class="lead reveal">願望牆——收集大家對「家」的想像。</p>
+    <p class="body-text reveal">不是收集聯絡資訊，而是收集每個人對地方的一句期待。留下你的一句話，成為這面牆的一部分。</p>
+
+    <div class="wall-form reveal">
+      <input type="text" id="wall-input" placeholder="寫下你對地方的一句期待……" maxlength="60">
+      <button class="submit-btn" id="wall-submit">留下這句話</button>
+    </div>
+    <p class="wall-note reveal">＊目前為單機展示版，你留下的話只會顯示在你自己的瀏覽器裡；串接後台後，就能讓大家的留言一起公開累積。</p>
+
+    <div class="wall-grid reveal" id="wall-grid"></div>
+  </div>
+</section>
+
+<section class="closing-cta">
+  <div class="closing-grid">
+    <div class="closing-text reveal">
+      <h2>謝謝你一路看到這裡。</h2>
+      <p class="body-text">我們始終相信，真正改變地方的，不是一家公司，而是一群願意留下來的人。下一個地方，也許就在你的社區；下一段故事，希望能和你一起開始。</p>
+    </div>
+    <div class="closing-pattern alt"></div>
+  </div>
+</section>
+
+<footer id="presenter">
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="small-lockup" src="assets/logo-lockup.png" alt="小院子 Little Yard Project">
+        <div class="creed">地方不是被改變，而是被陪伴。</div>
+      </div>
+      <div class="footer-nav">
+        <div class="label">Sitemap</div>
+        <a href="index.html">首頁</a>
+        <a href="story.html">家的模樣</a>
+        <a href="join.html">一起開始</a>
+      </div>
+      <div class="presenter">
+        <div class="label">主辦單位 · Presented by</div>
+        <img src="assets/con-logo.png" alt="原築院建築 Con+Create Architecture">
+        <p>小院子 Little Yard Project 由原築院建築 Con+Create Architecture 發起。</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>小院子 LITTLE YARD PROJECT</span>
+      <span>原築院建築 CON + CREATE ARCHITECTURE</span>
+    </div>
+  </div>
+</footer>
+
+<script src="common.js"></script>
+<script>
+  document.getElementById('join-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const checks = Array.from(document.querySelectorAll('.checkbox-item input:checked')).map(c=>c.value).join('、');
+    const name = document.getElementById('name').value;
+    const org = document.getElementById('org').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const dream = document.getElementById('dream').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent('一起開始 — ' + (checks || '想聊聊'));
+    const body = encodeURIComponent(`姓名：${name}\n單位：${org}\nEmail：${email}\n電話：${phone}\n\n想一起完成：${checks}\n\n這個地方未來的樣子：\n${dream}\n\n想分享的想法：\n${message}`);
+    window.location.href = `mailto:littleyardproject@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  const seedWishes = [
+    "希望孩子放學後有一個願意停留的地方。",
+    "希望十年後，這個社區還有笑聲。",
+    "希望企業的公益，能真正改變一個地方。",
+    "希望孩子認識自己的家鄉，而不是只認識課本。"
+  ];
+  const rots = [-2,1.5,-1,2,-1.5,1,-2.5,0.5];
+  const colors = ['var(--yellow)','var(--sky)','var(--pink)','var(--peach)'];
+  const grid = document.getElementById('wall-grid');
+
+  function loadWishes(){
+    try{
+      const stored = JSON.parse(localStorage.getItem('lyp_dream_wall') || '[]');
+      return stored;
+    }catch(e){ return []; }
+  }
+  function saveWish(text){
+    const stored = loadWishes();
+    stored.unshift(text);
+    localStorage.setItem('lyp_dream_wall', JSON.stringify(stored.slice(0,40)));
+  }
+  function render(){
+    grid.innerHTML = '';
+    const all = [...loadWishes(), ...seedWishes];
+    all.forEach((text, i) => {
+      const card = document.createElement('div');
+      card.className = 'wall-card';
+      card.style.setProperty('--rot', rots[i % rots.length] + 'deg');
+      card.style.background = colors[i % colors.length];
+      card.textContent = '「' + text + '」';
+      grid.appendChild(card);
+    });
+  }
+  document.getElementById('wall-submit').addEventListener('click', () => {
+    const input = document.getElementById('wall-input');
+    const val = input.value.trim();
+    if(!val) return;
+    saveWish(val);
+    input.value = '';
+    render();
+  });
+  render();
+</script>
+
+</body>
+</html>
